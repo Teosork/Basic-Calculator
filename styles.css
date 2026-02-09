@@ -39,9 +39,6 @@ body {
     margin-bottom: 8px;
     min-height: 1.2em;                  
     font-weight: 300;
-    overflow: hidden;           /* hide overflow */
-    text-overflow: ellipsis;    /* ... at end */
-    white-space: nowrap;        /* no wrapping */
 }
 
 #display {
