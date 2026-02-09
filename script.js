@@ -7,6 +7,7 @@ let currentValue ='0';
 let previousValue = null;
 let currentOperator = null;
 
+// Main click handler (delegation for all buttons)
 buttons.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -22,6 +23,33 @@ buttons.addEventListener('click', (e) => {
     }
 
     display.textContent = currentValue;
+    resizeDisplay();
+});
+
+// Full keyboard support (numpad + Enter/Esc/Backspace)
+document.addEventListener('keydown', (e) => {
+    const key = e.key;
+    
+    // Numbers + decimal
+    if (/[0-9.]/.test(key)) {
+        handleNumber(key);
+        display.textContent = currentValue;
+        resizeDisplay();
+        return;
+    }
+    
+    if ('+-*/%'.includes(key)) {
+        handleOperator(key);
+        return;
+    }
+    
+    if (key === 'Enter' || key === '=') {
+        handleAction('calculate');
+    } else if (key === 'Escape' || key === 'Delete') {
+        handleAction('clear');
+    } else if (key === 'Backspace') {
+        handleAction('backspace');
+    }
 });
 
 function handleNumber(number) {
@@ -47,9 +75,11 @@ function handleAction(action){
     previousValue = null; 
     currentOperator = null;  
     previousDisplay.textContent = '';
+    display.textContent = currentValue;
+    resizeDisplay(); 
     } else if (action === 'backspace'){
     currentValue = currentValue.slice(0, -1);
-        if (currentValue === '' || currentValue === '-') {     // if empty after backspace
+        if (currentValue === '' || currentValue === '-') {
         currentValue = '0';
         } 
     } else if (action === 'toggle-sign'){
@@ -64,7 +94,20 @@ function handleAction(action){
         currentValue = String(result);
         previousValue = null;
         currentOperator = null;
+        display.textContent = currentValue;
+        resizeDisplay(); 
     }
+}
+// Resize font for long numbers (prevents overflow)
+function resizeDisplay() {
+  const display = document.getElementById('display');
+  const text = display.textContent;
+  
+  let fontSize = 2.8;
+  if (text.length > 10) fontSize = 2.2;
+  if (text.length > 15) fontSize = 1.6;
+  
+  display.style.fontSize = fontSize + 'rem';
 }
 
 function operate(operator, a, b){
