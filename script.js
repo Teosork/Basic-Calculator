@@ -1,5 +1,7 @@
 const buttons = document.querySelector('#buttons');
 const display = document.querySelector('#display');
+const previousDisplay = document.querySelector('#previous-display');
+
 
 let currentValue ='0';
 let previousValue = null;
@@ -32,15 +34,19 @@ function handleNumber(number) {
     }
 }
 
-// function handleOperator(operator){
-//     previousValue = Number(currentValue);
-//     currentValue = '0';
-//     currentOperator = operator;
-// }
+function handleOperator(operator){
+    previousValue = Number(currentValue);
+    previousDisplay.textContent = `${previousValue} ${operator}`;
+    currentValue = '0';
+    currentOperator = operator;
+}
 
 function handleAction(action){
     if (action === 'clear') {
     currentValue = '0';
+    previousValue = null; 
+    currentOperator = null;  
+    previousDisplay.textContent = '';
     } else if (action === 'backspace'){
     currentValue = currentValue.slice(0, -1);
         if (currentValue === '' || currentValue === '-') {     // if empty after backspace
@@ -53,5 +59,21 @@ function handleAction(action){
         } else {
         currentValue = '-' + currentValue;
         }
+    } else if (action === 'calculate') {
+        const result = operate(currentOperator, previousValue, Number(currentValue));
+        currentValue = String(result);
+        previousValue = null;
+        currentOperator = null;
     }
+}
+
+function operate(operator, a, b){
+    if (operator === "+") return a + b;
+    if (operator === "-") return a - b;
+    if (operator === "*") return a * b;
+    if (operator === "/") {
+        if (b === 0) return NaN;
+        return a / b;
+    }
+    if (operator === "%") return a % b;
 }
