@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh; 
+    background: linear-gradient(135deg, #3e1717, #0a051f); 
+    display: grid;
+    place-items: center;
+    font-family: 'SF Pro Display', -apple-system, sans-serif;
+}
+
+#calculator-container {
+    background: rgba(66, 29, 29, 0.05);
+    backdrop-filter: blur(20px);           
+    border-radius: 18px;                    
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 24px;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05); 
+    width: 400px;
+}
+
+#screen-calculator {
+    background: rgba(0, 0, 0, 0.8);  
+    border-radius: 18px;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(10px);           
+}
+
+#previous-display {
+    color: rgba(255, 255, 255, 0.6); 
+    font-size: 1rem;
+    text-align: right;
+    margin-bottom: 8px;
+    min-height: 1.2em;                  
+    font-weight: 300;
+    overflow: hidden;           /* hide overflow */
+    text-overflow: ellipsis;    /* ... at end */
+    white-space: nowrap;        /* no wrapping */
+}
+
+#display {
+    color: #fff;
+    font-size: 2.8rem;                    
+    font-weight: 400;
+    text-align: right;
+    min-height: 2.8em;                 
+}
+
+#buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;                              
+    max-width: 100%;
+}
+
+button {
+    height: 72px;                        
+    border-radius: 20px;                    
+    border: none;
+    font-size: 1.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;            
+}
+
+[data-number],
+[data-action = "toggle-sign"] {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+[data-number]:hover,
+[data-action = "toggle-sign"]:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+[data-number]:active,
+[data-operator]:active,
+[data-action]:active {
+    transform: scale(0.98);               
+}
+
+[data-operator] {
+    background: rgba(255, 149, 0, 0.9);
+    color: #fff;
+}
+
+[data-operator]:hover {
+    background: rgba(255, 149, 0, 1);
+}
+
+[data-action = "calculate"] {
+    background: rgba(23, 211, 33, 0.9);
+    color: #fff;
+}
+
+[data-action = "calculate"]:hover {
+    background: rgba(23, 211, 33, 1);
+}
+
+[data-action = "clear"], [data-action = "backspace"] {
+    background: rgba(211, 23, 23, 0.9);
+    color: #fff;
+}
+
+[data-action = "clear"]:hover, 
+[data-action = "backspace"]:hover {
+    background: rgba(211, 23, 23, 1);
+}
